@@ -1,5 +1,4 @@
-poly2
+gcd
 *.o
 *.pyc
-
-test/*.py
+*.out

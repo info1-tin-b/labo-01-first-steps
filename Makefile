@@ -1,15 +1,15 @@
-EXEC=poly2
-CFLAGS=-c99 -Wall
+EXEC=gcd
+CFLAGS=-g -std=c11 -Wall -Werror
 
-all: $(EXEC) test
+all: test
 
-test: 
-	python test/test.py
+%: %.c
+	$(CC) $(CFLAGS) $? -o $@ $(LDFLAGS)
 
-patch-config:
-	git config filter.openssl.diff '.obfuscator/diff'
-	git config filter.openssl.clean '.obfuscator/clean'
-	git config filter.openssl.smudge '.obfuscator/smudge'
-	git config filter.openssl.required true
+test: $(EXEC)
+	test/test.sh $(abspath $<)
 
-PHONY: patch-config test all
+clean:
+	$(RM) $(EXEC) *.o
+
+PHONY: test all
